@@ -57,7 +57,8 @@ USER rails:rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-RUN bundle exec rails db:migrate
+# CUSTOM: Migrate SQLite without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails db:migrate
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
